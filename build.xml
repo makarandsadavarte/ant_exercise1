@@ -1,0 +1,31 @@
+<project name="Java program" default="run">
+
+
+<property file="prop1.properties"/>
+
+	<target name="run" depends="package">
+		<echo> "This step of running project" </echo>
+		<java jar="${dest_jar}" fork="true"/>
+	</target>
+	
+	<target name="package" depends="compile">
+		<echo> "packaging" </echo>
+		<jar basedir="${base_dir}" destfile="${dest_file}">
+			<manifest>
+				<attribute name="Main-class" value="${main_class}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="compile" depends="clean">
+		<echo> "Compile task" </echo>
+		<javac srcdir="${src_dir}" destdir="${dest_dir}"/>
+	</target>
+	
+	<target name="clean">
+		<echo> "clean task" </echo>
+		<delete dir="${delete_dir}"/>
+		<mkdir dir="${dest_dir}"/>
+	</target>
+	
+</project>

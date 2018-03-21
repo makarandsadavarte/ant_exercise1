@@ -1,0 +1,42 @@
+<project name="file system tasks" default="moving files">
+
+	<target name="test">
+		<record name="logfile.txt" action="start" append="true"/>
+		<exec executable="cmd.exe">
+             <arg line="cls.exe /c"/>
+        </exec>
+		<echo> "File system tasks" </echo>
+		<record name="logfile.txt" action="stop"/>
+	</target>
+		
+	<target name="clean" depends="test">
+		<record name="logfile.txt" action="start" append="true"/>
+		<delete dir="build"/>
+		<record name="logfile.txt" action="stop"/>
+	</target>
+	
+	<target name="directory creation" depends="clean">
+		<record name="logfile.txt" action="start" append="true"/>
+		<mkdir dir="build/classes"/>
+		<record name="logfile.txt" action="stop"/>
+	</target>
+	
+	<target name="copying file" depends="directory creation">
+		<record name="logfile.txt" action="start" append="true"/>
+		<copy file="helloworld.java" todir="build"/>
+		<copy todir="build">
+			<fileset dir="src">
+				<include name="**/*.java"/>
+			</fileset>
+		</copy>
+		<record name="logfile.txt" action="stop"/>
+	</target>
+	
+	<target name="moving files" depends="copying file">
+		<record name="logfile.txt" action="start" append="true"/>
+		<move file="helloworld.java" tofile="hello.java	"/>
+		<move file="hello.java" todir="build/classes"/>
+		<record name="logfile.txt" action="stop"/>
+	</target>
+
+</project>
